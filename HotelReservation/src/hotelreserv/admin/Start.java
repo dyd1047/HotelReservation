@@ -1,4 +1,4 @@
-package hotelreserv.client;
+package hotelreserv.admin;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -19,8 +19,8 @@ public class Start extends Page{
 	Toolkit kit;
 	ImageIcon icon;
 
-	public Start(ClientMain clientMain) {
-		super(clientMain);
+	public Start(AdminMain adminMain) {
+		super(adminMain);
 		URL url = this.getClass().getClassLoader().getResource("res/mainlogo.png");
 		icon = new ImageIcon(url);
 		Image img = icon.getImage();
@@ -38,7 +38,7 @@ public class Start extends Page{
 		this.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				clientMain.showPage(clientMain.REGIONSELECTION);
+				adminMain.showPage(adminMain.USERINFO);
 			}
 		});
 		

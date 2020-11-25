@@ -22,10 +22,21 @@ public class HotelMember {
 	public void setMid(String mid) {
 		this.mid = mid;
 	}
-	public String getPass() {
+	public String getEncryptionPass() {
 		return pass;
 	}
-	public void setPass(String pass) {
+	public String getDecryptionPass() {
+		String de_pass = null;
+		for (int i = 0; i < pass.length(); i++) {
+			de_pass += (char)(pass.charAt(i) / 3);
+		}
+		return de_pass;
+	}
+	public void setEncryptionPass(String pass) {
+		String en_pass = null;
+		for (int i = 0; i < pass.length(); i++) {
+			en_pass += (char)(pass.charAt(i) * 3);
+		}
 		this.pass = pass;
 	}
 	public String getName() {

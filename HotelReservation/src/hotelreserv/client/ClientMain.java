@@ -2,7 +2,11 @@ package hotelreserv.client;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.Connection;
@@ -12,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import common.image.ImageUtil;
 import hotelreserv.util.db.DBManager;
 
 public class ClientMain extends JFrame{
@@ -27,6 +32,7 @@ public class ClientMain extends JFrame{
 	public static final int MYPAGE=6;
 
 	JPanel p_navi; //웹사이트의 주 메뉴를 포함할 컨테이너 패널
+	JPanel p_naviLogo; //웹사이트의 주 메뉴를 포함할 컨테이너 패널
 	String[] navi_title = {"HOME","MyPage","Login"};
 	public JButton[]navi = new JButton[navi_title.length]; //[][][][][] 배열생성
 	
@@ -48,6 +54,7 @@ public class ClientMain extends JFrame{
 		user_container = new JPanel();
 		p_content = new JPanel();
 		p_navi = new JPanel();
+		p_naviLogo = new JPanel();
 
 		con = dbManager.connect(); 
 		
@@ -57,8 +64,50 @@ public class ClientMain extends JFrame{
 			this.setTitle("HotelReservation client로 접속 성공");
 		}
 		
-		for(int i =0;i<navi.length;i++) {
-			navi[i]=new JButton(navi_title[i]);
+		//내비게이션 버튼
+		navi[0]= new JButton(ImageUtil.getIcon(this.getClass(), "res/logo_black.png", 200, 100));
+		navi[0].setPreferredSize(new Dimension(200, 100));
+		navi[0].setBorderPainted(false);
+		navi[0].setContentAreaFilled(false);
+		navi[0].setFocusPainted(false);
+		navi[0].setCursor(new Cursor(Cursor.HAND_CURSOR));
+		p_naviLogo.setLayout(new BorderLayout());
+		p_naviLogo.add(navi[0], BorderLayout.WEST);
+		p_navi.add(p_naviLogo);
+		
+		for(int i =1;i<navi.length;i++) {
+				navi[i]=new JButton(navi_title[i]);
+				navi[i].setPreferredSize(new Dimension(200, 80));
+				navi[i].setForeground(Color.WHITE);
+				navi[i].setBorderPainted(false);
+				navi[i].setContentAreaFilled(false);
+				navi[i].setFocusPainted(false);
+				navi[i].setFont(new Font("verdana", Font.BOLD, 24));
+				navi[i].setCursor(new Cursor(Cursor.HAND_CURSOR));
+				navi[i].addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						Object obj = e.getSource();
+						for (int j = 0; j < navi.length; j++) {
+							if (obj == navi[j]) {
+								navi[j].setBackground(Color.WHITE);
+								navi[j].setForeground(Color.BLACK);
+								navi[j].setContentAreaFilled(true);
+							}
+						}
+					}
+					@Override
+					public void mouseExited(MouseEvent e) {
+						Object obj = e.getSource();
+						for (int j = 0; j < navi.length; j++) {
+							if (obj == navi[j]) {
+								navi[j].setBackground(Color.BLACK);
+								navi[j].setForeground(Color.WHITE);
+								navi[j].setContentAreaFilled(true);
+							}
+						}
+					}
+				});
 			p_navi.add(navi[i]);
 		}
 		
@@ -71,10 +120,15 @@ public class ClientMain extends JFrame{
 		page[5]=new RegistMember(this);
 		page[6]=new MyPage(this);
 		
+		//스타일
+		user_container.setLayout(new BorderLayout(0,0));
 		user_container.setPreferredSize(new Dimension(1200,900));
-		
-		user_container.setLayout(new BorderLayout());
 		user_container.add(p_navi,BorderLayout.NORTH);
+		
+		p_navi.setPreferredSize(new Dimension(1200, 100));
+		p_navi.setBackground(Color.BLACK);
+		p_naviLogo.setPreferredSize(new Dimension(750, 100));
+		p_naviLogo.setBackground(Color.BLACK);
 
 		for(int i=0;i<page.length;i++) {
 			p_content.add(page[i]);
@@ -105,7 +159,7 @@ public class ClientMain extends JFrame{
 				if(obj==navi[0]) { //home
 					showPage(0);
 				}else if(obj==navi[1]) {
-					this.setBackground(Color.BLACK);
+					showPage(LOGIN);
 				}else if(obj==navi[2]) {
 					//로그인을 요청할지, 로그아웃을 요청할지를 구분하자!!
 					//hasSession의 값이 true 일때는 로그인한 상태이므로, 로그아웃을 요청해야 한다..
