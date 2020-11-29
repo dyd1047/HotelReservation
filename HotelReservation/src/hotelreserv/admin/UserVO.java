@@ -1,6 +1,6 @@
-package hotelreserv.client;
+package hotelreserv.admin;
 
-public class HotelMember {
+public class UserVO {
 
    private int member_id;
    private String mid;

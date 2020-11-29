@@ -9,6 +9,7 @@ public class Page extends JPanel{
 	
 	public Page(AdminMain adminMain) {
 		this.adminMain = adminMain;
-		this.setPreferredSize(new Dimension(adminMain.WIDTH, adminMain.HEIGHT-100));
+		this.setPreferredSize(new Dimension(1200,900));
 	}
+
 }

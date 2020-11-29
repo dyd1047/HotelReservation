@@ -15,35 +15,36 @@ import javax.swing.JPanel;
 import common.image.ImageUtil;
 
 public class Start extends Page{
-	JPanel can;
-	Toolkit kit;
-	ImageIcon icon;
+   Image img;
+   JPanel can;
+   Toolkit kit;
+   ImageIcon icon;
 
-	public Start(ClientMain clientMain) {
-		super(clientMain);
-		URL url = this.getClass().getClassLoader().getResource("res/mainlogo.png");
-		icon = new ImageIcon(url);
-		Image img = icon.getImage();
-		img = img.getScaledInstance(1200, 800, Image.SCALE_SMOOTH);
-		icon.setImage(img);
-		
-		
-		can = new JPanel() {
-			@Override
-			public void paint(Graphics g) {
-				g.drawImage(icon.getImage(), 0, 0, this);
-			}
-		};
-		
-		this.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				clientMain.showPage(clientMain.REGIONSELECTION);
-			}
-		});
-		
-		can.setPreferredSize(new Dimension(1200,900));
-		add(can);
-	}
+   public Start(ClientMain clientMain) {
+      super(clientMain);
+         URL url = this.getClass().getClassLoader().getResource("res/main.png");
+         icon = new ImageIcon(url);
+         Image img = icon.getImage();
+         img = img.getScaledInstance(1200, 800, Image.SCALE_SMOOTH);
+         icon.setImage(img);
+      
+      
+      can = new JPanel() {
+         @Override
+         public void paint(Graphics g) {
+            g.drawImage(icon.getImage(), 0, 0, this);
+         }
+      };
+      
+      this.addMouseListener(new MouseAdapter() {
+         @Override
+         public void mouseReleased(MouseEvent e) {
+            clientMain.showPage(clientMain.REGIONSELECTION);
+         }
+      });
+      
+      can.setPreferredSize(new Dimension(1200,900));
+      add(can);
+   }
 
 }
